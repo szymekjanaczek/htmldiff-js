@@ -2647,7 +2647,7 @@ class MatchOptions {
 const tagRegex = /^\s*<\/?[^>]+>\s*$/;
 const tagWordRegex = /<[^\s>]+/;
 const whitespaceRegex = /^(\s|&nbsp;)+$/;
-const wordRegex = /[\w\#@]+/;
+const wordRegex = /(?:[\w\d#@þæðöøóòôõáåäãúůüûíïýÿéèêßçñ,.])+/i;
 const specialCaseWordTags = ["<img"];
 
 function isTag(item) {
@@ -2886,6 +2886,8 @@ function convertHtmlToListOfWords(text, blockExpressions) {
           addClearWordSwitchMode(state, character, src_Mode.entity);
         } else if (isWhiteSpace(character)) {
           addClearWordSwitchMode(state, character, src_Mode.whitespace);
+        } else if (/[,.]/.test(character) && (isWhiteSpace(text[i + 1]) || text[i + 1] === undefined)) {
+          addClearWordSwitchMode(state, character, src_Mode.character);
         } else if (isWord(character) && (state.currentWord.length === 0 || isWord(state.currentWord[state.currentWord.length - 1]))) {
           state.currentWord.push(character);
         } else {

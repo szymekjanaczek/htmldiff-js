@@ -50,6 +50,12 @@ function convertHtmlToListOfWords(text, blockExpressions) {
         } else if (Utils.isWhiteSpace(character)) {
           addClearWordSwitchMode(state, character, Mode.whitespace);
         } else if (
+          /[,.]/.test(character) &&
+          (Utils.isWhiteSpace(text[i + 1]) || text[i + 1] === undefined)
+        ) {
+          // special case for [.,] before whitespace or end of text
+          addClearWordSwitchMode(state, character, Mode.character);
+        } else if (
           Utils.isWord(character) &&
           (state.currentWord.length === 0 ||
             Utils.isWord(state.currentWord[state.currentWord.length - 1]))

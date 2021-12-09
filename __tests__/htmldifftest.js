@@ -52,15 +52,9 @@ test.each([
     '<del class="diffmod">Sigríður</del><ins class="diffmod">Ákvæði</ins>',
   ],
   [
-    "Some numbers 12.321 and another 32.123",
-    "Some numbers 21.123 and another 321",
-    'Some numbers <del class="diffmod">12.321</del><ins class="diffmod">21.123</ins> and another <del class="diffmod">32.123</del><ins class="diffmod">321</ins>',
-  ],
-  // TODO: Don't speak Chinese, this needs to be validated
-  [
-    "这个是中文内容, CSharp is the bast",
-    "这是中国语内容，CSharp is the best language.",
-    '这<del class="diffdel">个</del>是中<del class="diffmod">文</del><ins class="diffmod">国语</ins>内容<del class="diffmod">, </del><ins class="diffmod">，</ins>CSharp is the <del class="diffmod">bast</del><ins class="diffmod">best language.</ins>',
+    "Some numbers 12,321 and another 32.123 foo.",
+    "Some numbers 21.123 and another 321 foo,",
+    'Some numbers <del class="diffmod">12,321</del><ins class="diffmod">21.123</ins> and another <del class="diffmod">32.123</del><ins class="diffmod">321</ins> foo<del class="diffmod">.</del><ins class="diffmod">,</ins>',
   ],
   [
     "The Dealer.",

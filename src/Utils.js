@@ -1,7 +1,7 @@
 ﻿const tagRegex = /^\s*<\/?[^>]+>\s*$/;
 const tagWordRegex = /<[^\s>]+/;
 const whitespaceRegex = /^(\s|&nbsp;)+$/;
-const wordRegex = /[\w\#@]+/;
+const wordRegex = /(?:[\w\d#@þæðöøóòôõáåäãúůüûíïýÿéèêßçñ,.])+/i;
 
 const specialCaseWordTags = ["<img"];
 
