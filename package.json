@@ -9,8 +9,12 @@
     "Jordan Hitch",
     "Valur (valur@hugsmidjan.is)"
   ],
+  "engines": {
+    "node": ">14"
+  },
   "scripts": {
     "build": "webpack --mode production",
+    "dev": "webpack --mode production --watch",
     "test": "jest"
   },
   "repository": {

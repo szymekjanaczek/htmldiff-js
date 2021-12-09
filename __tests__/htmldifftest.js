@@ -46,6 +46,16 @@ test.each([
     "Some formatted text",
     'Some <ins class="mod">formatted</ins> text',
   ],
+  [
+    "Sigríður",
+    "Ákvæði",
+    '<del class="diffmod">Sigríður</del><ins class="diffmod">Ákvæði</ins>',
+  ],
+  [
+    "Some numbers 12.321 and another 32.123",
+    "Some numbers 21.123 and another 321",
+    'Some numbers <del class="diffmod">12.321</del><ins class="diffmod">21.123</ins> and another <del class="diffmod">32.123</del><ins class="diffmod">321</ins>',
+  ],
   // TODO: Don't speak Chinese, this needs to be validated
   [
     "这个是中文内容, CSharp is the bast",
