@@ -47,9 +47,9 @@ test.each([
     'Some <ins class="mod">formatted</ins> text',
   ],
   [
-    "Sigríður",
-    "Ákvæði",
-    '<del class="diffmod">Sigríður</del><ins class="diffmod">Ákvæði</ins>',
+    "Sigríður og Guðmundur",
+    "Ákvæði á ekki viðmundsson um",
+    '<del class="diffmod">Sigríður</del><ins class="diffmod">Ákvæði</ins> <del class="diffmod">og</del><ins class="diffmod">á</ins> <del class="diffmod">Guðmundur</del><ins class="diffmod">ekki viðmundsson um</ins>',
   ],
   [
     "Some numbers 12,321 and another 32.123 foo.",
