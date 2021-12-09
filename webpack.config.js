@@ -1,11 +1,11 @@
 const webpack = require('webpack');
 const path = require('path');
 const UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
-        htmldiff: ['babel-polyfill', './src/Diff.js'],
+        htmldiff: ['./src/Diff.js'],
     },
 
     output: {
@@ -19,17 +19,17 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.m?js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                }
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
             }
         ]
     },
 
     plugins: [
-        new CleanWebpackPlugin(['dist']),
+        new CleanWebpackPlugin({
+            cleanAfterEveryBuildPatterns: ['dist']
+        }),
         new UnminifiedWebpackPlugin()
     ],
 
