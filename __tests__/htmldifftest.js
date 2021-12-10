@@ -61,6 +61,11 @@ test.each([
     "The Dealer info,",
     'The Dealer<del class="diffmod">.</del><ins class="diffmod">&nbsp;info,</ins>',
   ],
+  [
+    "Normalization Jörg Århus".normalize("NFD"),
+    "Normalization Jörg Århus",
+    "Normalization Jörg Århus",
+  ],
 ])("old text '%s', new text '%s' gives delta '%s'", (oldtext, newText, delta) => {
   const result = HtmlDiff.execute(oldtext, newText);
   expect(result).toBe(delta);

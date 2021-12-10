@@ -29,8 +29,8 @@ const specialCaseOpeningTagRegex =
 class HtmlDiff {
   constructor(oldText, newText) {
     this.content = [];
-    this.newText = newText;
-    this.oldText = oldText;
+    this.newText = newText.normalize("NFC");
+    this.oldText = oldText.normalize("NFC");
 
     this.specialTagDiffStack = [];
     this.newWords = [];

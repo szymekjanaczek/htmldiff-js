@@ -2647,7 +2647,7 @@ class MatchOptions {
 const tagRegex = /^\s*<\/?[^>]+>\s*$/;
 const tagWordRegex = /<[^\s>]+/;
 const whitespaceRegex = /^(\s|&nbsp;)+$/;
-const wordRegex = /(?:[\w\d#@þæðöøóòôõáåäãúůüûíïýÿéèêßçñ,.])+/i;
+const wordRegex = /(?:[\w\d#@þæðöøóòôõáàåäãúùůüûíïýỳÿéèêßçñ,.])+/i;
 const specialCaseWordTags = ["<img"];
 
 function isTag(item) {
@@ -3013,8 +3013,8 @@ const specialCaseOpeningTagRegex = /<((strong)|(b)|(i)|(dfn)|(em)|(big)|(small)|
 class Diff_HtmlDiff {
   constructor(oldText, newText) {
     this.content = [];
-    this.newText = newText;
-    this.oldText = oldText;
+    this.newText = newText.normalize("NFC");
+    this.oldText = oldText.normalize("NFC");
     this.specialTagDiffStack = [];
     this.newWords = [];
     this.oldWords = [];
