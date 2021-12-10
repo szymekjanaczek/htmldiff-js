@@ -1,3 +1,10 @@
+## Custom fork of [HtmlDiff-js](https://github.com/dfoverdx/htmldiff-js/) 
+
+- Modified to handle european special characters and pretty formatted numbers.
+- Includes some minor cleanups and bugfixes. Dropped ancient browser support.
+
+---
+
 JavaScript port of [HtmlDiff.NET](https://github.com/Rohland/htmldiff.net) which is itself a C# port of the Ruby implementation, [HtmlDiff](https://github.com/myobie/htmldiff/).
 
 Project Description
