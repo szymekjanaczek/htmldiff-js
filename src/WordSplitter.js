@@ -1,5 +1,5 @@
-﻿import Mode from "./Mode";
-import * as Utils from "./Utils";
+﻿import Mode from './Mode';
+import * as Utils from './Utils';
 
 function convertHtmlToListOfWords(text, blockExpressions) {
   let state = {
@@ -44,7 +44,7 @@ function convertHtmlToListOfWords(text, blockExpressions) {
     switch (state.mode) {
       case Mode.character:
         if (Utils.isStartOfTag(character)) {
-          addClearWordSwitchMode(state, "<", Mode.tag);
+          addClearWordSwitchMode(state, '<', Mode.tag);
         } else if (Utils.isStartOfEntity(character)) {
           addClearWordSwitchMode(state, character, Mode.entity);
         } else if (Utils.isWhiteSpace(character)) {
@@ -70,7 +70,7 @@ function convertHtmlToListOfWords(text, blockExpressions) {
       case Mode.tag:
         if (Utils.isEndOfTag(character)) {
           state.currentWord.push(character);
-          state.words.push(state.currentWord.join(""));
+          state.words.push(state.currentWord.join(''));
 
           state.currentWord = [];
           state.mode = Utils.isWhiteSpace(character) ? Mode.whitespace : Mode.character;
@@ -102,7 +102,7 @@ function convertHtmlToListOfWords(text, blockExpressions) {
           let switchToNextMode = true;
           if (state.currentWord.length !== 0) {
             state.currentWord.push(character);
-            state.words.push(state.currentWord.join(""));
+            state.words.push(state.currentWord.join(''));
 
             //join &nbsp; entity with last whitespace
             if (
@@ -134,7 +134,7 @@ function convertHtmlToListOfWords(text, blockExpressions) {
   }
 
   if (state.currentWord.length !== 0) {
-    state.words.push(state.currentWord.join(""));
+    state.words.push(state.currentWord.join(''));
   }
 
   return state.words;
@@ -142,7 +142,7 @@ function convertHtmlToListOfWords(text, blockExpressions) {
 
 function addClearWordSwitchMode(state, character, mode) {
   if (state.currentWord.length !== 0) {
-    state.words.push(state.currentWord.join(""));
+    state.words.push(state.currentWord.join(''));
   }
 
   state.currentWord = [character];
@@ -161,7 +161,7 @@ function findBlocks(text, blockExpressions) {
     while ((m = exp.exec(text)) !== null) {
       if (blockLocations.has(m.index)) {
         throw new Error(
-          "One or more block expressions result in a text sequence that overlaps. Current expression: " +
+          'One or more block expressions result in a text sequence that overlaps. Current expression: ' +
             exp.toString()
         );
       }

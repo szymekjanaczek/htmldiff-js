@@ -1,6 +1,6 @@
-﻿import Match from "./Match";
-import MatchOptions from "./MatchOptions";
-import * as Utils from "./Utils";
+﻿import Match from './Match';
+import MatchOptions from './MatchOptions';
+import * as Utils from './Utils';
 
 function putNewWord(block, word, blockSize) {
   block.push(word);
@@ -13,7 +13,7 @@ function putNewWord(block, word, blockSize) {
     return null;
   }
 
-  return block.join("");
+  return block.join('');
 }
 
 // Finds the longest match in given texts. It uses indexing with fixed granularity that is used to compare blocks of text.
@@ -52,7 +52,7 @@ export default class MatchFinder {
   normalizeForIndex(word) {
     word = Utils.stripAnyAttributes(word);
     if (this.options.IgnoreWhiteSpaceDifferences && Utils.isWhiteSpace(word)) {
-      return " ";
+      return ' ';
     }
 
     return word;

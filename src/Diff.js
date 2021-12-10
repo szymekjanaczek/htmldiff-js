@@ -1,26 +1,26 @@
-﻿import Action from "./Action";
-import Match from "./Match";
-import MatchFinder from "./MatchFinder";
-import Operation from "./Operation";
-import MatchOptions from "./MatchOptions";
-import * as WordSplitter from "./WordSplitter";
-import * as Utils from "./Utils";
+﻿import Action from './Action';
+import Match from './Match';
+import MatchFinder from './MatchFinder';
+import Operation from './Operation';
+import MatchOptions from './MatchOptions';
+import * as WordSplitter from './WordSplitter';
+import * as Utils from './Utils';
 
 // This value defines balance between speed and memory utilization. The higher it is the faster it works and more memory consumes.
 const MatchGranuarityMaximum = 4;
 
 const specialCaseClosingTags = new Map([
-  ["</strong>", 0],
-  ["</em>", 0],
-  ["</b>", 0],
-  ["</i>", 0],
-  ["</big>", 0],
-  ["</small>", 0],
-  ["</u>", 0],
-  ["</sub>", 0],
-  ["</strike>", 0],
-  ["</s>", 0],
-  ["</dfn>", 0],
+  ['</strong>', 0],
+  ['</em>', 0],
+  ['</b>', 0],
+  ['</i>', 0],
+  ['</big>', 0],
+  ['</small>', 0],
+  ['</u>', 0],
+  ['</sub>', 0],
+  ['</strike>', 0],
+  ['</s>', 0],
+  ['</dfn>', 0],
 ]);
 
 const specialCaseOpeningTagRegex =
@@ -29,8 +29,8 @@ const specialCaseOpeningTagRegex =
 class HtmlDiff {
   constructor(oldText, newText) {
     this.content = [];
-    this.newText = newText.normalize("NFC");
-    this.oldText = oldText.normalize("NFC");
+    this.newText = newText.normalize('NFC');
+    this.oldText = oldText.normalize('NFC');
 
     this.specialTagDiffStack = [];
     this.newWords = [];
@@ -61,7 +61,7 @@ class HtmlDiff {
       this.performOperation(item);
     }
 
-    return this.content.join("");
+    return this.content.join('');
   }
 
   addBlockExpression(exp) {
@@ -92,10 +92,10 @@ class HtmlDiff {
         this.processEqualOperation(opp);
         break;
       case Action.delete:
-        this.processDeleteOperation(opp, "diffdel");
+        this.processDeleteOperation(opp, 'diffdel');
         break;
       case Action.insert:
-        this.processInsertOperation(opp, "diffins");
+        this.processInsertOperation(opp, 'diffins');
         break;
       case Action.none:
         break;
@@ -106,48 +106,48 @@ class HtmlDiff {
   }
 
   processReplaceOperation(opp) {
-    this.processDeleteOperation(opp, "diffmod");
-    this.processInsertOperation(opp, "diffmod");
+    this.processDeleteOperation(opp, 'diffmod');
+    this.processInsertOperation(opp, 'diffmod');
   }
 
   processInsertOperation(opp, cssClass) {
     let text = this.newWords.filter(
       (s, pos) => pos >= opp.startInNew && pos < opp.endInNew
     );
-    this.insertTag("ins", cssClass, text);
+    this.insertTag('ins', cssClass, text);
   }
 
   processDeleteOperation(opp, cssClass) {
     let text = this.oldWords.filter(
       (s, pos) => pos >= opp.startInOld && pos < opp.endInOld
     );
-    this.insertTag("del", cssClass, text);
+    this.insertTag('del', cssClass, text);
   }
 
   processEqualOperation(opp) {
     let result = this.newWords.filter(
       (s, pos) => pos >= opp.startInNew && pos < opp.endInNew
     );
-    this.content.push(result.join(""));
+    this.content.push(result.join(''));
   }
 
   insertTag(tag, cssClass, words) {
     while (words.length) {
       let nonTags = this.extractConsecutiveWords(words, (x) => !Utils.isTag(x));
 
-      let specialCaseTagInjection = "";
+      let specialCaseTagInjection = '';
       let specialCaseTagInjectionIsbefore = false;
 
       if (nonTags.length !== 0) {
-        let text = Utils.wrapText(nonTags.join(""), tag, cssClass);
+        let text = Utils.wrapText(nonTags.join(''), tag, cssClass);
         this.content.push(text);
       } else {
         if (specialCaseOpeningTagRegex.test(words[0])) {
           let matchedTag = words[0].match(specialCaseOpeningTagRegex);
-          matchedTag = "<" + matchedTag[0].replace(/(<|>| )/g, "") + ">";
+          matchedTag = '<' + matchedTag[0].replace(/(<|>| )/g, '') + '>';
           this.specialTagDiffStack.push(matchedTag);
           specialCaseTagInjection = '<ins class="mod">';
-          if (tag === "del") {
+          if (tag === 'del') {
             words.shift();
 
             while (words.length > 0 && specialCaseOpeningTagRegex.test(words[0])) {
@@ -161,15 +161,15 @@ class HtmlDiff {
           // If we didn't have an opening tag, and we don't have a match with the previous tag used
           if (
             openingTag === null ||
-            openingTag !== words[words.length - 1].replace(/\//g, "")
+            openingTag !== words[words.length - 1].replace(/\//g, '')
           ) {
             //do nothing
           } else {
-            specialCaseTagInjection = "</ins>";
+            specialCaseTagInjection = '</ins>';
             specialCaseTagInjectionIsbefore = true;
           }
 
-          if (tag === "del") {
+          if (tag === 'del') {
             words.shift();
 
             while (words.length > 0 && specialCaseClosingTags.has(words[0])) {
@@ -185,11 +185,11 @@ class HtmlDiff {
         if (specialCaseTagInjectionIsbefore) {
           this.content.push(
             specialCaseTagInjection +
-              this.extractConsecutiveWords(words, Utils.isTag).join("")
+              this.extractConsecutiveWords(words, Utils.isTag).join('')
           );
         } else {
           this.content.push(
-            this.extractConsecutiveWords(words, Utils.isTag).join("") +
+            this.extractConsecutiveWords(words, Utils.isTag).join('') +
               specialCaseTagInjection
           );
         }
@@ -203,8 +203,8 @@ class HtmlDiff {
     for (let i = 0; i < words.length; i++) {
       let word = words[i];
 
-      if (i === 0 && word === " ") {
-        words[i] = "&nbsp;";
+      if (i === 0 && word === ' ') {
+        words[i] = '&nbsp;';
       }
 
       if (!condition(word)) {

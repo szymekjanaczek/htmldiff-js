@@ -2648,7 +2648,7 @@ const tagRegex = /^\s*<\/?[^>]+>\s*$/;
 const tagWordRegex = /<[^\s>]+/;
 const whitespaceRegex = /^(\s|&nbsp;)+$/;
 const wordRegex = /(?:[\w\d#@þæðöøóòôõáàåäãúùůüûíïýỳÿéèêßçñ,.])+/i;
-const specialCaseWordTags = ["<img"];
+const specialCaseWordTags = ['<img'];
 
 function isTag(item) {
   if (specialCaseWordTags.some(re => item !== null && item.startsWith(re))) {
@@ -2660,28 +2660,28 @@ function isTag(item) {
 
 function stripTagAttributes(word) {
   let tag = tagWordRegex.exec(word)[0];
-  word = tag + (word.endsWith("/>") ? "/>" : ">");
+  word = tag + (word.endsWith('/>') ? '/>' : '>');
   return word;
 }
 
 function wrapText(text, tagName, cssClass) {
-  return ["<", tagName, ' class="', cssClass, '">', text, "</", tagName, ">"].join("");
+  return ['<', tagName, ' class="', cssClass, '">', text, '</', tagName, '>'].join('');
 }
 
 function isStartOfTag(val) {
-  return val === "<";
+  return val === '<';
 }
 
 function isEndOfTag(val) {
-  return val === ">";
+  return val === '>';
 }
 
 function isStartOfEntity(val) {
-  return val === "&";
+  return val === '&';
 }
 
 function isEndOfEntity(val) {
-  return val === ";";
+  return val === ';';
 }
 
 function isWhiteSpace(value) {
@@ -2718,7 +2718,7 @@ function putNewWord(block, word, blockSize) {
     return null;
   }
 
-  return block.join("");
+  return block.join('');
 }
 
 class MatchFinder_MatchFinder {
@@ -2756,7 +2756,7 @@ class MatchFinder_MatchFinder {
     word = stripAnyAttributes(word);
 
     if (this.options.IgnoreWhiteSpaceDifferences && isWhiteSpace(word)) {
-      return " ";
+      return ' ';
     }
 
     return word;
@@ -2881,7 +2881,7 @@ function convertHtmlToListOfWords(text, blockExpressions) {
     switch (state.mode) {
       case src_Mode.character:
         if (isStartOfTag(character)) {
-          addClearWordSwitchMode(state, "<", src_Mode.tag);
+          addClearWordSwitchMode(state, '<', src_Mode.tag);
         } else if (isStartOfEntity(character)) {
           addClearWordSwitchMode(state, character, src_Mode.entity);
         } else if (isWhiteSpace(character)) {
@@ -2899,7 +2899,7 @@ function convertHtmlToListOfWords(text, blockExpressions) {
       case src_Mode.tag:
         if (isEndOfTag(character)) {
           state.currentWord.push(character);
-          state.words.push(state.currentWord.join(""));
+          state.words.push(state.currentWord.join(''));
           state.currentWord = [];
           state.mode = isWhiteSpace(character) ? src_Mode.whitespace : src_Mode.character;
         } else {
@@ -2931,7 +2931,7 @@ function convertHtmlToListOfWords(text, blockExpressions) {
 
           if (state.currentWord.length !== 0) {
             state.currentWord.push(character);
-            state.words.push(state.currentWord.join(""));
+            state.words.push(state.currentWord.join(''));
 
             if (state.words.length > 2 && isWhiteSpace(state.words[state.words.length - 2]) && isWhiteSpace(state.words[state.words.length - 1])) {
               let w1 = state.words[state.words.length - 2];
@@ -2958,7 +2958,7 @@ function convertHtmlToListOfWords(text, blockExpressions) {
   }
 
   if (state.currentWord.length !== 0) {
-    state.words.push(state.currentWord.join(""));
+    state.words.push(state.currentWord.join(''));
   }
 
   return state.words;
@@ -2966,7 +2966,7 @@ function convertHtmlToListOfWords(text, blockExpressions) {
 
 function addClearWordSwitchMode(state, character, mode) {
   if (state.currentWord.length !== 0) {
-    state.words.push(state.currentWord.join(""));
+    state.words.push(state.currentWord.join(''));
   }
 
   state.currentWord = [character];
@@ -2985,7 +2985,7 @@ function findBlocks(text, blockExpressions) {
 
     while ((m = exp.exec(text)) !== null) {
       if (blockLocations.has(m.index)) {
-        throw new Error("One or more block expressions result in a text sequence that overlaps. Current expression: " + exp.toString());
+        throw new Error('One or more block expressions result in a text sequence that overlaps. Current expression: ' + exp.toString());
       }
 
       blockLocations.set(m.index, m.index + m[0].length);
@@ -3007,14 +3007,14 @@ function findBlocks(text, blockExpressions) {
 
 
 const MatchGranuarityMaximum = 4;
-const specialCaseClosingTags = new Map([["</strong>", 0], ["</em>", 0], ["</b>", 0], ["</i>", 0], ["</big>", 0], ["</small>", 0], ["</u>", 0], ["</sub>", 0], ["</strike>", 0], ["</s>", 0], ["</dfn>", 0]]);
+const specialCaseClosingTags = new Map([['</strong>', 0], ['</em>', 0], ['</b>', 0], ['</i>', 0], ['</big>', 0], ['</small>', 0], ['</u>', 0], ['</sub>', 0], ['</strike>', 0], ['</s>', 0], ['</dfn>', 0]]);
 const specialCaseOpeningTagRegex = /<((strong)|(b)|(i)|(dfn)|(em)|(big)|(small)|(u)|(sub)|(sup)|(strike)|(s))[\>\s]+/gi;
 
 class Diff_HtmlDiff {
   constructor(oldText, newText) {
     this.content = [];
-    this.newText = newText.normalize("NFC");
-    this.oldText = oldText.normalize("NFC");
+    this.newText = newText.normalize('NFC');
+    this.oldText = oldText.normalize('NFC');
     this.specialTagDiffStack = [];
     this.newWords = [];
     this.oldWords = [];
@@ -3038,7 +3038,7 @@ class Diff_HtmlDiff {
       this.performOperation(item);
     }
 
-    return this.content.join("");
+    return this.content.join('');
   }
 
   addBlockExpression(exp) {
@@ -3059,11 +3059,11 @@ class Diff_HtmlDiff {
         break;
 
       case src_Action.delete:
-        this.processDeleteOperation(opp, "diffdel");
+        this.processDeleteOperation(opp, 'diffdel');
         break;
 
       case src_Action.insert:
-        this.processInsertOperation(opp, "diffins");
+        this.processInsertOperation(opp, 'diffins');
         break;
 
       case src_Action.none:
@@ -3076,42 +3076,42 @@ class Diff_HtmlDiff {
   }
 
   processReplaceOperation(opp) {
-    this.processDeleteOperation(opp, "diffmod");
-    this.processInsertOperation(opp, "diffmod");
+    this.processDeleteOperation(opp, 'diffmod');
+    this.processInsertOperation(opp, 'diffmod');
   }
 
   processInsertOperation(opp, cssClass) {
     let text = this.newWords.filter((s, pos) => pos >= opp.startInNew && pos < opp.endInNew);
-    this.insertTag("ins", cssClass, text);
+    this.insertTag('ins', cssClass, text);
   }
 
   processDeleteOperation(opp, cssClass) {
     let text = this.oldWords.filter((s, pos) => pos >= opp.startInOld && pos < opp.endInOld);
-    this.insertTag("del", cssClass, text);
+    this.insertTag('del', cssClass, text);
   }
 
   processEqualOperation(opp) {
     let result = this.newWords.filter((s, pos) => pos >= opp.startInNew && pos < opp.endInNew);
-    this.content.push(result.join(""));
+    this.content.push(result.join(''));
   }
 
   insertTag(tag, cssClass, words) {
     while (words.length) {
       let nonTags = this.extractConsecutiveWords(words, x => !isTag(x));
-      let specialCaseTagInjection = "";
+      let specialCaseTagInjection = '';
       let specialCaseTagInjectionIsbefore = false;
 
       if (nonTags.length !== 0) {
-        let text = wrapText(nonTags.join(""), tag, cssClass);
+        let text = wrapText(nonTags.join(''), tag, cssClass);
         this.content.push(text);
       } else {
         if (specialCaseOpeningTagRegex.test(words[0])) {
           let matchedTag = words[0].match(specialCaseOpeningTagRegex);
-          matchedTag = "<" + matchedTag[0].replace(/(<|>| )/g, "") + ">";
+          matchedTag = '<' + matchedTag[0].replace(/(<|>| )/g, '') + '>';
           this.specialTagDiffStack.push(matchedTag);
           specialCaseTagInjection = '<ins class="mod">';
 
-          if (tag === "del") {
+          if (tag === 'del') {
             words.shift();
 
             while (words.length > 0 && specialCaseOpeningTagRegex.test(words[0])) {
@@ -3121,12 +3121,12 @@ class Diff_HtmlDiff {
         } else if (specialCaseClosingTags.has(words[0])) {
           let openingTag = this.specialTagDiffStack.length === 0 ? null : this.specialTagDiffStack.pop();
 
-          if (openingTag === null || openingTag !== words[words.length - 1].replace(/\//g, "")) {} else {
-            specialCaseTagInjection = "</ins>";
+          if (openingTag === null || openingTag !== words[words.length - 1].replace(/\//g, '')) {} else {
+            specialCaseTagInjection = '</ins>';
             specialCaseTagInjectionIsbefore = true;
           }
 
-          if (tag === "del") {
+          if (tag === 'del') {
             words.shift();
 
             while (words.length > 0 && specialCaseClosingTags.has(words[0])) {
@@ -3140,9 +3140,9 @@ class Diff_HtmlDiff {
         }
 
         if (specialCaseTagInjectionIsbefore) {
-          this.content.push(specialCaseTagInjection + this.extractConsecutiveWords(words, isTag).join(""));
+          this.content.push(specialCaseTagInjection + this.extractConsecutiveWords(words, isTag).join(''));
         } else {
-          this.content.push(this.extractConsecutiveWords(words, isTag).join("") + specialCaseTagInjection);
+          this.content.push(this.extractConsecutiveWords(words, isTag).join('') + specialCaseTagInjection);
         }
       }
     }
@@ -3154,8 +3154,8 @@ class Diff_HtmlDiff {
     for (let i = 0; i < words.length; i++) {
       let word = words[i];
 
-      if (i === 0 && word === " ") {
-        words[i] = "&nbsp;";
+      if (i === 0 && word === ' ') {
+        words[i] = '&nbsp;';
       }
 
       if (!condition(word)) {

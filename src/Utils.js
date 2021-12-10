@@ -3,7 +3,7 @@ const tagWordRegex = /<[^\s>]+/;
 const whitespaceRegex = /^(\s|&nbsp;)+$/;
 const wordRegex = /(?:[\w\d#@þæðöøóòôõáàåäãúùůüûíïýỳÿéèêßçñ,.])+/i;
 
-const specialCaseWordTags = ["<img"];
+const specialCaseWordTags = ['<img'];
 
 function isTag(item) {
   if (specialCaseWordTags.some((re) => item !== null && item.startsWith(re))) {
@@ -15,28 +15,28 @@ function isTag(item) {
 
 function stripTagAttributes(word) {
   let tag = tagWordRegex.exec(word)[0];
-  word = tag + (word.endsWith("/>") ? "/>" : ">");
+  word = tag + (word.endsWith('/>') ? '/>' : '>');
   return word;
 }
 
 function wrapText(text, tagName, cssClass) {
-  return ["<", tagName, ' class="', cssClass, '">', text, "</", tagName, ">"].join("");
+  return ['<', tagName, ' class="', cssClass, '">', text, '</', tagName, '>'].join('');
 }
 
 function isStartOfTag(val) {
-  return val === "<";
+  return val === '<';
 }
 
 function isEndOfTag(val) {
-  return val === ">";
+  return val === '>';
 }
 
 function isStartOfEntity(val) {
-  return val === "&";
+  return val === '&';
 }
 
 function isEndOfEntity(val) {
-  return val === ";";
+  return val === ';';
 }
 
 function isWhiteSpace(value) {

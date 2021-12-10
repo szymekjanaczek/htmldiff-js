@@ -1,19 +1,19 @@
-const webpack = require("webpack");
-const path = require("path");
-const UnminifiedWebpackPlugin = require("unminified-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require('webpack');
+const path = require('path');
+const UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    htmldiff: ["./src/Diff.js"],
+    htmldiff: ['./src/Diff.js'],
   },
 
   output: {
-    filename: "htmldiff.min.js",
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "/dist/",
-    library: "HtmlDiff",
-    libraryTarget: "commonjs2",
+    filename: 'htmldiff.min.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/dist/',
+    library: 'HtmlDiff',
+    libraryTarget: 'commonjs2',
   },
 
   module: {
@@ -21,14 +21,14 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        loader: 'babel-loader',
       },
     ],
   },
 
   plugins: [
     new CleanWebpackPlugin({
-      cleanAfterEveryBuildPatterns: ["dist"],
+      cleanAfterEveryBuildPatterns: ['dist'],
     }),
     new UnminifiedWebpackPlugin(),
   ],
@@ -38,6 +38,6 @@ module.exports = {
   },
 
   watchOptions: {
-    ignored: ["**/dist", "**/node_modules"],
+    ignored: ['**/dist', '**/node_modules'],
   },
 };
