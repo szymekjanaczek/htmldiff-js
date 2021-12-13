@@ -34,6 +34,7 @@
   "homepage": "https://github.com/dfoverdx/htmldiff-js#readme",
   "devDependencies": {
     "@babel/core": "^7.16.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
