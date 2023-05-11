@@ -3,7 +3,7 @@ const tagWordRegex = /<[^\s>]+/;
 const whitespaceRegex = /^(\s|&nbsp;)+$/;
 const wordRegex = /(?:[\w\d#@þæðöøóòôõáàåäãúùůüûíïýỳÿéèêßçñ,.])+/i;
 
-const specialCaseWordTags = ['<img'];
+const specialCaseWordTags = ['<img', '<video', '<iframe'];
 
 function isTag(item) {
   if (specialCaseWordTags.some((re) => item !== null && item.startsWith(re))) {
